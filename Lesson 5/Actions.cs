@@ -1,24 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
-
-namespace Lesson_5
+﻿namespace Lesson_5
 {
     public class Actions
     {
-        public static string Menu(ref string menu)
+        public static string Continue() 
         {
-            Console.WriteLine("Choose on of the action:");
-            Console.WriteLine("1.Find words containing the maximum number of digits.");
-            Console.WriteLine("2.Find the longest word and determine how many times it occurs in the text.");
-            Console.WriteLine("3.Replace the numbers from 0 to 9 with the words 'zero', one', ..., 'nine'.");
-            Console.WriteLine("4.Display first interrogative and then exclamatory sentences.");
-            Console.WriteLine("5.Display only sentences that do not contain commas.");
-            Console.WriteLine("6.Find words that start and end with the same letter.");
-            menu = Console.ReadLine();
+            string ans;
+            Console.WriteLine("1.Do actions one more time.");
+            Console.WriteLine("2.Exit to enter the new text.");
+            Console.WriteLine("3.Close the programm.");
+            ans = Console.ReadLine();
+
+            return ans;
+        }
+        public static string Menu()
+        {
+            bool repeat = true;
+
+            string menu = "";
+
+            while (repeat == true)
+            {
+                Console.WriteLine("Choose on of the action:");
+                Console.WriteLine("1.Find words containing the maximum number of digits.");
+                Console.WriteLine("2.Find the longest word and determine how many times it occurs in the text.");
+                Console.WriteLine("3.Replace the numbers from 0 to 9 with the words 'zero', one', ..., 'nine'.");
+                Console.WriteLine("4.Display first interrogative and then exclamatory sentences.");
+                Console.WriteLine("5.Display only sentences that do not contain commas.");
+                Console.WriteLine("6.Find words that start and end with the same letter.");
+                menu = Console.ReadLine();
+
+
+                if (menu == "1"|| menu == "2"||menu == "3"|| menu == "4"|| menu =="5"|| menu == "6")
+                {
+                    repeat = false;
+                   
+                }
+                else
+                {
+                    Console.WriteLine($"There is no '{menu}' action. Try again!");
+                    repeat = true;
+                }
+                
+            }
             return menu;
         }
         public static void MaxNumber(string[] text)
@@ -68,26 +91,59 @@ namespace Lesson_5
         }
 
         public static void ReplaceNum ( string text)
-        { 
-            string newtex = text.Replace("0", " zero ");
-            string newtext1 = newtex.Replace("1", " one ");
-            string newtext2 = newtext1.Replace("2", " two ");
-            string newtext3 = newtext2.Replace("3", " three ");
-            string newtext4 = newtext3.Replace("4", " four ");
-            string newtext5 = newtext4.Replace("5", " five ");
-            string newtext6 = newtext5.Replace("6", " six ");
-            string newtext7 = newtext6.Replace("7", " seven ");
-            string newtext8 = newtext7.Replace("8", " eight ");
-            string newtext9 = newtext8.Replace("9", " nine ");
- 
-            Console.WriteLine(newtext9);
-        }
-        public static void SentComma(string [] txt)
         {
-            foreach (string sentence in txt)
+            string[] WordToString = new string[10] { " zero ", " one ", " two ", " three ", " four ", " five ", " six ", " seven ", " eight ", " nine " };
+
+            for(int i = 0; i < 10; i++)
             {
-                if (!sentence.Contains(','))
-                    Console.WriteLine(sentence.Trim());
+                text = text.Replace(i.ToString(), WordToString[i]);
+            }
+            Console.WriteLine(text);
+            
+        }
+        public static void SentComma(string txt)
+        {
+            string [] sents = txt.Split ('.', '!', '?');
+            foreach (string sentence in sents)
+            {
+                if (sentence.Contains(',') == true)
+                {
+                    Console.WriteLine(sentence);
+                }
+            }
+        }
+
+        public static void InterrogativeExclamatory(string txt)
+        {
+            string[] sent = txt.Split('.');
+            foreach(string sentence in sent)
+            {
+                if (txt.Contains('!') == true)
+                { 
+
+                }
+            }
+        }
+        
+        public static void StartEndOneLetter (string txt)
+        {
+            string[] word = txt.Split('.', ' ', '!', '?');
+            for (int i = 0; i < word.Length; i++)
+            {
+                char [] sim = word[i].ToCharArray();
+                for (int j = 0; j < sim.Length-1; j++)
+                {
+                    if (sim[j] == sim[(word[i].Length - 1)])
+                    {
+                        Console.WriteLine(word[i]);
+                        break;
+                    }
+                    else if (sim[j] != sim[(word[i].Length - 1)])
+                    {
+                        break;
+                    }
+
+                }
             }
         }
     }
